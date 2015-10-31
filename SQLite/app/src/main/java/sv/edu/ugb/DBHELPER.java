@@ -9,7 +9,7 @@ public class DBHELPER extends SQLiteOpenHelper {
     public static final String DBNAME = "ugb.sqlite";
     public static final int DBVERSION = 1;
 
-    public static final String USUARIONAME = "CREATE TABLE usuario(_id integer primary key, " +
+    public static final String USUARIONAME = "CREATE TABLE usuario(_id integer primary key AUTOINCREMENT, " +
             " nombre text not null, apellido text not null, " +
             " email text not null, clave text not null);";
 

@@ -4,16 +4,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import sv.edu.ugb.UsuarioDAO;
 
-public class MainActivity extends AppCompatActivity {
-    UsuarioDAO dao;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private UsuarioDAO dao;
+    private EditText nombre, apellido, email, clave;
+    private Button btguardar, btlimpiar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dao = new UsuarioDAO(this);
+        nombre = (EditText) findViewById(R.id.txtNombre);
+        apellido = (EditText) findViewById(R.id.txtApellido);
+        email = (EditText) findViewById(R.id.txtEmail);
+        clave = (EditText) findViewById(R.id.txtClave);
+
+        btguardar = (Button) findViewById(R.id.btnGuardar);
+        btlimpiar = (Button) findViewById(R.id.btnLimpiar);
+
+        btguardar.setOnClickListener(this);
+
+        btlimpiar.setOnClickListener(this);
     }
 
     @Override
@@ -36,5 +53,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btnGuardar){
+            String nombre2, apellido2, email2, clave2;
+            nombre2  = nombre.getText().toString();
+            apellido2 = apellido.getText().toString();
+            email2 = email.getText().toString();
+            clave2 = clave.getText().toString();
+
+            long respuesta = dao.insertar(nombre2, apellido2, email2, clave2);
+
+            if(respuesta > 0){
+                Toast.makeText(this, "Se ingreso un registro", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this, "No Se pudo ingreso un registro", Toast.LENGTH_LONG).show();
+
+            }
+        }
     }
 }
